@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef , useState} from "react";
 
 
 import {
@@ -14,21 +14,42 @@ import {
 import Register from "../Register/Index";
 import Buttons from "../../Components/Buttons/Index";
 
-function Login() {
-  const inputUser = useRef("");
-  const inputPassword = useRef("");
-  const paginaLogada = false;
-  const paginaCadastro = true;
+import { verifyLogin } from "../../Utils/api"
 
-  const LogonFunction = () =>{
-    alert(`clicou e funcionou com ${inputUser.current.value}`)
-}
+
+
+// function abreCadastra(params) {
+  
+  // }
+  
+  function Login() {
+    const inputUser = useRef("");
+    const inputPassword = useRef("");
+    
+    const [paginaLogada, setPaginaLogada] = useState(false);
+    let paginaCadastro = false;
+    
+    function loga(email, senha) {
+      verifyLogin(email,senha).then(() =>{
+        const res = localStorage.getItem("verification")
+        if (res) {
+          setPaginaLogada(true)
+        }
+        else{
+          alert("login ou senha errados")
+        }
+      })
+    }
+    
+
 
 if (paginaLogada) {
     return(<></>)
 }else if (paginaCadastro) {
     return(<Register/>)
 }
+
+
 
     return (
         <Container>
@@ -38,11 +59,11 @@ if (paginaLogada) {
         <InputBox type="Text" placeholder="User" ref={inputUser} value={inputUser.current.value}/>
         </InputContainer>
         <InputContainer>
-        <InputBox type="Password" placeholder="Password" values={inputPassword} />
+        <InputBox type="Password" placeholder="Password" ref={inputPassword} values={inputPassword.current.value} />
         </InputContainer>
         <GroupButton>
           <ButtonSoloContainer primary>
-            <Buttons function={LogonFunction} name="Logon"></Buttons>
+            <Buttons function={() =>{loga(inputUser.current.value,inputPassword.current.value)}} name="Logon"></Buttons>
           </ButtonSoloContainer>
           <ButtonSoloContainer>
             <Buttons name="Cadastre-se"></Buttons>

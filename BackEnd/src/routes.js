@@ -6,11 +6,11 @@ const routes = new Router();
 
 routes.post("/sessionsCreate", SessionControler.store);
 
-routes.get("/sessionsStart", SessionControler.show);
+routes.post("/sessionsStart", SessionControler.show);
 
 routes.get("/pokemon", PokeController.index);
 
-routes.get("/pokemon/info", PokeController.show);
+routes.post("/pokemon/info", PokeController.show);
 
 
 export default routes;
