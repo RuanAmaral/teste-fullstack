@@ -6,8 +6,8 @@ export const Container = styled.div`
   justify-content: center;
   padding: 10px;
   margin: 0 10px;
-  height: 240px;
-  max-height: 240px;
+  height: 230px;
+  max-height: 230px;
   width: 180px;
   max-width: 180px;
   background-color: ${({ theme }) => theme.palette.BACKGROUND.WHITE};

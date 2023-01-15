@@ -1,4 +1,3 @@
-import mewtwo from '../../assets/mewtwo.png';
 import pokeball from '../../assets/pokeball-minimalist.png';
 import {
   Container,
@@ -10,18 +9,29 @@ import {
   SubInfo,
 } from './styles';
 
-function Card() {
+interface ICardProps {
+  image: any;
+  number: number;
+  name: string;
+  weight: number | string;
+  height: number | string;
+  type: string;
+}
+
+function Card({ image, number, name, weight, height, type }: ICardProps) {
   return (
     <Container>
-      <PokemonPicture src={mewtwo} />
+      <PokemonPicture src={image} />
       <MainInfoContainer>
         <PokeIcon src={pokeball} />
-        <MainInfo>150 Mewtwo</MainInfo>
+        <MainInfo>
+          {number} {name}
+        </MainInfo>
       </MainInfoContainer>
       <SubInfoContainer>
-        <SubInfo>Peso: 122.0 kg</SubInfo>
-        <SubInfo>Altura: 2.0 m</SubInfo>
-        <SubInfo>Tipo: Psíquico</SubInfo>
+        <SubInfo>Peso: {weight} kg</SubInfo>
+        <SubInfo>Altura: {height} m</SubInfo>
+        <SubInfo>Tipo: {type}</SubInfo>
       </SubInfoContainer>
     </Container>
   );
