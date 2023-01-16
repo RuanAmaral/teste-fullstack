@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Routes as Router } from 'react-router-dom';
+import { Route, Routes as Router, useNavigate } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
 import { Content } from '../components/Layout/Content';
@@ -9,12 +9,17 @@ import { SignUp } from '../pages/SignUp';
 
 function Routes() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
+    if (token) {
       setIsAuthenticated(true);
-    }, 3000);
-  });
+      navigate('/');
+    } else {
+      setToken(localStorage.getItem('token'));
+    }
+  }, [token, navigate]);
 
   return (
     <Router>

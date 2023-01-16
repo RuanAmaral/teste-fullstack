@@ -9,10 +9,20 @@ class PokeController {
   }
 
   async show(req, res) {
-    const { index } = req.body;
-    const url = `${pokeApi}pokemon/${index}/`;
-    const response = await axios.get(url);
-    return res.json(response.data)
+    const list = [];
+    for (let i = 1; i <= 60; i++) {
+      const url = `${pokeApi}pokemon/${i}/`;
+      const response = await axios.get(url);
+      list.push({
+        number: response.data.id,
+        name: response.data.name,
+        weight: response.data.weight,
+        height: response.data.height,
+        type: response.data.types[0].type.name,
+        image: response.data.sprites.front_default,
+      });
+    }
+    return res.json(list);
   }
 }
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/pokemon-logo.png';
+import { register } from '../../services/api';
 import {
   Container,
   FormContainer,
@@ -10,7 +11,9 @@ import {
   Content,
   Text,
   Wrapper,
+  Success,
   Warning,
+  SuccessText,
   AlertText,
   Field,
   Input,
@@ -25,17 +28,28 @@ function SignUp() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [empty, setEmpty] = useState(false);
   const [failure, setFailure] = useState(false);
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  function handleLogin() {
+  function handleRegister() {
     if (email && name && password && phoneNumber) {
       try {
-        alert('login');
+        register(email, name, password, phoneNumber).then((res) => {
+          if (res.resposta) {
+            setSuccess(true);
+          }
+        });
       } catch {
         setFailure(true);
+        setTimeout(() => {
+          setFailure(false);
+        }, 4000);
       }
     } else {
       setEmpty(true);
+      setTimeout(() => {
+        setEmpty(false);
+      }, 4000);
     }
   }
 
@@ -47,6 +61,15 @@ function SignUp() {
           <LogoContainer>
             <Logo src={logo} />
           </LogoContainer>
+          {success ? (
+            <Wrapper>
+              <Success />
+              <SuccessText>
+                Usúario criado com sucesso. Volte para tela de Login para se
+                autenticar
+              </SuccessText>
+            </Wrapper>
+          ) : null}
           {empty ? (
             <Wrapper>
               <Warning />
@@ -81,6 +104,16 @@ function SignUp() {
           </Field>
           <Field>
             <Input
+              id="phoneNumber"
+              autoComplete="off"
+              type="number"
+              placeholder="Telefone*"
+              value={phoneNumber}
+              onChange={(e: any) => setPhoneNumber(e.target.value)}
+            />
+          </Field>
+          <Field>
+            <Input
               autoComplete="off"
               placeholder="Senha*"
               type="password"
@@ -88,17 +121,7 @@ function SignUp() {
               onChange={(e: any) => setPassword(e.target.value)}
             />
           </Field>
-          <Field>
-            <Input
-              id="phoneNumber"
-              autoComplete="off"
-              type="number"
-              placeholder="Usuário*"
-              value={phoneNumber}
-              onChange={(e: any) => setPhoneNumber(e.target.value)}
-            />
-          </Field>
-          <Button id="button" onClick={handleLogin}>
+          <Button id="button" onClick={handleRegister}>
             Cadastrar
           </Button>
           <BackLogin onClick={() => navigate('/login')}>

@@ -1,4 +1,6 @@
 // @ts-nocheck
+import cuid from 'cuid';
+
 import { usePagination, DOTS } from '../../utils/usePagination';
 import { Container } from './styles';
 
@@ -49,7 +51,7 @@ function Pagination({
       {paginationRange!.map((pageNumber) => {
         if (pageNumber === DOTS) {
           return (
-            <li key={2} className="pagination-item dots">
+            <li key={cuid()} className="pagination-item dots">
               &#8230;
             </li>
           );
@@ -57,7 +59,7 @@ function Pagination({
 
         return (
           <li
-            key={2}
+            key={cuid()}
             className="pagination-item"
             selected={pageNumber === currentPage}
             onClick={() => onPageChange(pageNumber)}

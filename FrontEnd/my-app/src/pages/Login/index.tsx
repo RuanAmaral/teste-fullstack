@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/pokemon-logo.png';
+import { verifyLogin } from '../../services/api';
 import {
   Container,
   FormContainer,
@@ -28,12 +29,20 @@ function Login() {
   function handleLogin() {
     if (email && password) {
       try {
-        alert('login');
+        verifyLogin(email, password).then(() => {
+          localStorage.getItem('verification');
+        });
       } catch {
         setFailure(true);
+        setTimeout(() => {
+          setFailure(false);
+        }, 4000);
       }
     } else {
       setEmpty(true);
+      setTimeout(() => {
+        setEmpty(false);
+      }, 4000);
     }
   }
 

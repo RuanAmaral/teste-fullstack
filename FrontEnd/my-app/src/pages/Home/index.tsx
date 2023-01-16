@@ -1,33 +1,55 @@
-import { useState, useMemo } from 'react';
+// @ts-nocheck
+import cuid from 'cuid';
+import { useState, useMemo, useEffect, useContext } from 'react';
+import ReactLoading from 'react-loading';
+import { ThemeContext } from 'styled-components';
 
-import mewtwo from '../../assets/mewtwo.png';
 import { Card } from '../../components/Card';
 import { Pagination } from '../../components/Pagination';
-import data from '../../mocks/test.json';
-import { Container } from './styles';
+import { searchAllPokemons } from '../../services/api';
+import { Container, LoadingContainer } from './styles';
 
 function Home() {
   const pageSize = 12;
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any>([]);
+  const { palette } = useContext(ThemeContext);
+
+  useEffect(() => {
+    try {
+      searchAllPokemons().then(() => {
+        const list = JSON.parse(localStorage.getItem('pokemons'));
+        setData(list);
+        setLoading(false);
+      });
+    } catch {
+      setData([]);
+    }
+  }, []);
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+    return data?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, data]);
 
-  return (
+  return loading ? (
+    <LoadingContainer>
+      <ReactLoading type="spin" color={palette.GENERAL.TERTIARY} />
+    </LoadingContainer>
+  ) : (
     <Container>
-      {currentTableData.map((item) => {
+      {currentTableData?.map((item: any) => {
         return (
           <Card
-            key={item?.id}
-            image={mewtwo}
-            number={item?.id}
-            name={item?.first_name}
-            weight={item?.phone}
-            height={item?.phone}
-            type={item?.last_name}
+            key={cuid()}
+            image={item?.image}
+            number={item?.number}
+            name={item?.name}
+            weight={item?.weight}
+            height={item?.height}
+            type={item?.type}
           />
         );
       })}

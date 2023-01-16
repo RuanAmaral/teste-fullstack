@@ -17,6 +17,7 @@ declare module 'styled-components' {
         CLEAR_GREY: string;
         CONTRAST_ONE: string;
         CONTRAST_TWO: string;
+        SUCCESS: string;
       };
     };
   }

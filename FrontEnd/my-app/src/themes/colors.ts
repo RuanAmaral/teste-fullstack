@@ -14,6 +14,7 @@ export default {
       CLEAR_GREY: '#666666',
       CONTRAST_ONE: '#000000',
       CONTRAST_TWO: '#FFFFFF',
+      SUCCESS: '#079B16',
     },
   },
 };

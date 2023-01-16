@@ -1,3 +1,4 @@
+import { FaSignOutAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -58,16 +59,9 @@ export const Touchable = styled.button`
   padding: 0;
   border: 0;
   outline: none;
-  width: 100px;
-  margin: 0 2px;
+  margin: 0 8px;
   cursor: pointer;
   background-color: transparent;
-  color: ${({ theme }) => theme.palette.TEXT.CONTRAST_TWO};
-  &:hover {
-    color: ${(props) => props.theme.palette.TEXT.CONTRAST_TWO};
-    padding: 10px 10px;
-    border-radius: 5px;
-  }
 `;
 
 export const Title = styled.p`
@@ -100,4 +94,36 @@ export const Initials = styled.p`
   font-family: 'Roboto', sans-serif;
   text-align: center;
   color: ${(props) => props.theme.palette.GENERAL.TERTIARY};
+`;
+
+export const Logout = styled(FaSignOutAlt).attrs((props) => ({
+  ...props,
+  size: 18,
+  color: props.theme.palette.BACKGROUND.WHITE,
+}))`
+  margin-right: 7px;
+`;
+
+export const Tooltip = styled.div`
+  position: relative;
+  display: inline-block;
+
+  .tooltiptext {
+    visibility: hidden;
+    width: 60px;
+    top: 100%;
+    left: 50%;
+    margin-left: -50px;
+    background-color: ${(props) => props.theme.palette.TEXT.CLEAR_GREY};
+    color: ${(props) => props.theme.palette.TEXT.CONTRAST_TWO};
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+  }
 `;

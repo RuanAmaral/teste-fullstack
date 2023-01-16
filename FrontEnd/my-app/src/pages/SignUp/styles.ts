@@ -1,4 +1,5 @@
 import { shade } from 'polished';
+import { FaCheck } from 'react-icons/fa';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import styled from 'styled-components';
 
@@ -66,8 +67,22 @@ export const Warning = styled(HiOutlineExclamationCircle).attrs((props) => ({
   margin-right: 7px;
 `;
 
+export const Success = styled(FaCheck).attrs((props) => ({
+  ...props,
+  size: 16,
+  color: props.theme.palette.TEXT.SUCCESS,
+}))`
+  margin-right: 7px;
+`;
+
 export const AlertText = styled.p`
   color: ${({ theme }) => theme.palette.GENERAL.TERTIARY};
+  font-family: 'Roboto Light', sans-serif;
+  font-size: 11px;
+`;
+
+export const SuccessText = styled.p`
+  color: ${({ theme }) => theme.palette.TEXT.SUCCESS};
   font-family: 'Roboto Light', sans-serif;
   font-size: 11px;
 `;

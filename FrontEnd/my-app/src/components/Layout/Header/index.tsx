@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import logo from '../../../assets/pokeball.png';
 import {
@@ -11,11 +13,17 @@ import {
   Wrapper,
   Avatar,
   Initials,
+  Touchable,
+  Logout,
+  Tooltip,
 } from './styles';
 
 function Header() {
   const [initialsName, setInitialsName] = useState('');
-  const username = 'Ruan Amaral';
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const username = userData.nome;
+  const { email } = userData;
+  const navigate = useNavigate();
 
   const handleInitials = () => {
     const parts = username?.split(' ');
@@ -32,6 +40,12 @@ function Header() {
     handleInitials();
   });
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+    window.location.reload();
+  };
+
   return (
     <Container>
       <LeftContent>
@@ -40,12 +54,18 @@ function Header() {
       </LeftContent>
       <RightContent>
         <Wrapper>
-          <RightContentInfo>Ruan Amaral</RightContentInfo>
-          <RightContentInfo>ruan.amaral@gmail.com</RightContentInfo>
+          <RightContentInfo>{username}</RightContentInfo>
+          <RightContentInfo>{email}</RightContentInfo>
         </Wrapper>
         <Avatar>
           <Initials>{initialsName || null}</Initials>
         </Avatar>
+        <Touchable onClick={handleLogout}>
+          <Tooltip>
+            <Logout />
+            <span className="tooltiptext">Sair</span>
+          </Tooltip>
+        </Touchable>
       </RightContent>
     </Container>
   );

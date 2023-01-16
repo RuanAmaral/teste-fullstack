@@ -11,7 +11,6 @@ routes.post("/sessions", SessionController.store);
 
 routes.get("/pokemon", PokeController.index);
 
-routes.post("/pokemon/info", PokeController.show);
-
+routes.get("/pokemon/info", PokeController.show);
 
 export default routes;
